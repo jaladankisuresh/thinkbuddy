@@ -20,6 +20,10 @@ var userNotificationCtrl = {
       }
     ).run()
     .then(function(groupMemberIds){
+      if(groupMemberIds.indexOf(userId) > -1) {
+        groupMemberIds.splice(groupMemberIds.indexOf(userId), 1);
+      }
+              
       return models.notificationFeed.orderBy({index: r.desc('date')})
         .filter(function(notification) {
           return r.table('ProfileNetwork').getAll(userId, {index: "profileId"})('referencesProfileId')

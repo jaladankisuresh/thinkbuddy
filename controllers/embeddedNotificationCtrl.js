@@ -38,7 +38,6 @@ var embeddedNotificationCtrl = {
       return controllers.userNotificationCtrl.getCollection(paramsObj)
       .then(function(notifications){
         console.log('new set of notifications');
-        console.log(notifications);
         if(!notifications || notifications.length == 0) {
           console.log('stop building stories');
           let error = {
@@ -75,6 +74,7 @@ var embeddedNotificationCtrl = {
                 notificationsStore.find({ 'type': doc.type, 'target': doc.target }).sort({ date : -1 }).execAsync()
                 .then(function(docs) {
                   console.log('target similar docs :' + docs.length);
+                  //console.log(docs);
                   docs.forEach(function(item){
                     obj.itemArr.push(item.actor);
                   });
@@ -84,6 +84,7 @@ var embeddedNotificationCtrl = {
                   notificationsStore.removeAsync({ 'type': doc.type, 'target': doc.target }, { multi: true })
                   .then(function(numRemoved) {
                     console.log('target grouping removed :' + numRemoved);
+                    console.log(obj);
                     resolve(obj);
                   });
                 });
@@ -96,7 +97,7 @@ var embeddedNotificationCtrl = {
                 notificationsStore.find({ 'type': doc.type, 'actor': doc.actor }).sort({ date : -1 }).execAsync()
                 .then(function(docs) {
                   console.log('actor similar docs :' + docs.length);
-                  console.log(docs);
+                  //console.log(docs);
                   docs.forEach(function(item){
                     obj.itemArr.push(item.target);
                   });
@@ -106,9 +107,9 @@ var embeddedNotificationCtrl = {
                   notificationsStore.removeAsync({ 'type': doc.type, 'actor': doc.actor }, { multi: true })
                   .then(function(numRemoved) {
                     console.log('actor grouping removed :' + numRemoved);
+                    console.log(obj);
                     resolve(obj);
                   });
-                  //console.log(obj);
                 });
                 break;
               default:
@@ -121,14 +122,12 @@ var embeddedNotificationCtrl = {
                   console.log('None grouping removed :' + numRemoved);
                   resolve(obj);
                 });
-                //console.log(obj);
                 break;
             }
           })
           .then(function(){
             var userStory = new models.UserStory(doc);
-            userStory.generateTitleDesc(index, obj);
-            return userStory;
+            return userStory.buildStoryInfo(index, obj);
           });
         }
       });

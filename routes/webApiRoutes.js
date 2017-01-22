@@ -32,7 +32,7 @@ router.route(['/usernotification/:userId', '/usernotification/:userId/:startDate
         userId : req.params.userId,
         offset : req.params.startDateOffset || moment().toISOString(),
         count : 10,
-        notificationsCount : 25
+        notificationsCount : 30
       };
       webApi.onResponse(controllers.userNotificationCtrl.getStories(paramsObj), res);
     });

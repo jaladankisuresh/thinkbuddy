@@ -1,0 +1,14 @@
+<h2>{{title}}</h2>
+<button id="refresh-user-stories">Refresh Stories</button>
+<ul id="user-story-list">
+  <li *ngFor="let story of userStories">
+    <div class="card">
+      <div class="container">
+        <img src="/assets/img_avatar.png" alt="Avatar">        
+        <span class="type">{{story.type}}</span>
+        <div><b>{{story.title}}</b></div>
+        <div>{{story.title}}</div>
+      </div>
+    </div>
+  </li>
+</ul>

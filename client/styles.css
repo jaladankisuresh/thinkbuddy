@@ -1,0 +1,12 @@
+/* You can add global styles to this file, and also import other style files */
+body {
+    background-color: #f6f6f6;
+}
+
+body > .app-content {
+  margin: 0 auto;
+  padding: 10px;
+  background-color: #eee;
+  font-family: Verdana,sans-serif;
+  max-width: 978px;
+}
